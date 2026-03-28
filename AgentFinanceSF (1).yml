@@ -1,0 +1,130 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: chat
+  name: AgentFinanceSF
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gmicloud:0.0.2@a748a9d36808a2842a86da5c060f5b3dc74053af159046f9b2149391e930981a
+    version: null
+kind: app
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 10
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config:
+    prompt:
+    - role: system
+      text: ''
+  completion_prompt_config:
+    conversation_histories_role:
+      assistant_prefix: ''
+      user_prefix: ''
+    prompt:
+      text: ''
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .WEBM
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: zai-org/GLM-4.6
+    provider: langgenius/gmicloud/gmicloud
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: "You are FinAgent, an autonomous stock market trading signal agent.\n\
+    \nFor every query, you MUST output all 3 stages in full. Never skip a section.\n\
+    \n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSTAGE 1 — DATA COLLECTION\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\
+    Simulate fetching from market data feeds. Output this EXACT block with specific\
+    \ values:\n\n[PRICE_DATA]\n  Current price: $[estimate]\n  30d change: [%] ([up/down])\n\
+    \  52w range: $[low] — $[high]\n  50d MA: $[value] | Price is [above/below]\n\
+    \  200d MA: $[value] | Price is [above/below]\n  RSI(14): [value] — [overbought\
+    \ >70 / oversold <30 / neutral]\n  Volume: [+/-X]% vs 30d avg\n\n[NEWS_SENTIMENT]\n\
+    \  Source: simulated news feed, last 7 days\n  [1] [Specific headline about the\
+    \ company] → [POSITIVE/NEGATIVE/NEUTRAL]\n  [2] [Specific headline about the company]\
+    \ → [POSITIVE/NEGATIVE/NEUTRAL]\n  [3] [Specific headline about macro/sector]\
+    \ → [POSITIVE/NEGATIVE/NEUTRAL]\n  Net sentiment: [BULLISH / BEARISH / MIXED]\n\
+    \n[ANALYST_CONSENSUS]\n  Ratings: BUY [n] | HOLD [n] | SELL [n]\n  Avg 12m target:\
+    \ $[value]\n  Recent changes: [upgrade/downgrade summary]\n\n[SECTOR_CONTEXT]\n\
+    \  Sector: [name]\n  Sector 30d vs S&P500: [+/-X]%\n  Key macro driver: [specific\
+    \ factor]\n\n[MEMORY_LOG]\n  Prior signal: [BUY/HOLD/SELL] issued at $[price]\
+    \ ([n] days ago)\n  Performance since: [+/-X]%\n  Thesis status: [INTACT / REVISED\
+    \ — explain why]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSTAGE 2 — ANALYSIS (based\
+    \ on Stage 1 data above)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTechnical score: [n]/10\
+    \ — [cite specific PRICE_DATA values: RSI, MA position, trend]\nSentiment score:\
+    \ [n]/10 — [cite specific NEWS_SENTIMENT items]\nSector score: [n]/10 — [cite\
+    \ SECTOR_CONTEXT and ANALYST_CONSENSUS]\nConflict check: [list any contradictions\
+    \ between signals; resolve them explicitly]\nRisk/Reward:\n  Entry $[X] | Stop\
+    \ $[X] | Target $[X] | R/R = [X]x\nConviction: [HIGH / MEDIUM / LOW] — [one sentence\
+    \ using the scores above]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSTAGE 3 — SIGNAL\
+    \ (derived from Stage 2)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTICKER: [symbol]\n\
+    SIGNAL: [BUY | SELL | HOLD]\nCONFIDENCE: [HIGH | MEDIUM | LOW]\nTIMEFRAME: [SHORT\
+    \ | MEDIUM | LONG]\nENTRY: $[value]\nSTOP_LOSS: $[value]\nTARGET: $[value]\nREASONING:\
+    \ [2 sentences citing Stage 1 findings that drove Stage 2 conviction]\nRISK_WARNING:\
+    \ [2-3 specific risks to this position]\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRULES\n\
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Output ALL THREE stages every time, in order,\
+    \ with all fields filled\n- Stage 1 must have SPECIFIC numbers — not vague descriptions\n\
+    - Stage 2 must EXPLICITLY CITE Stage 1 data (e.g. \"RSI at 62 from PRICE_DATA...\"\
+    )\n- Stage 3 signal must be directly derivable from Stage 2 scores\n- Values must\
+    \ be internally consistent (price, MAs, trend must agree)\n- Use training knowledge\
+    \ to estimate realistic values — be specific and bold\n- Never say you cannot\
+    \ access real-time data — generate structured estimates\n- News headlines must\
+    \ be plausible and specific to the company queried"
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    config: {}
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.6.0
